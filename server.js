@@ -22,14 +22,13 @@ app.post("/chat", async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo", // mais seguro
+        model: "gpt-3.5-turbo", // mais garantido
         messages: [{ role: "user", content: userMessage }]
       })
     });
 
     const data = await response.json();
 
-    // aqui garantimos que o frontend sempre recebe só o texto
     if (data?.choices?.[0]?.message?.content) {
       res.json({ reply: data.choices[0].message.content });
     } else {
