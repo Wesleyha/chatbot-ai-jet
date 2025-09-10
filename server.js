@@ -6,12 +6,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// rota raiz para teste
+// rota de teste
 app.get("/", (req, res) => {
   res.send("✅ API do Chatbot está online!");
 });
 
-// rota de chat
 app.post("/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
@@ -23,20 +22,21 @@ app.post("/chat", async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini", // troque se precisar
+        model: "gpt-3.5-turbo", // mais seguro
         messages: [{ role: "user", content: userMessage }]
       })
     });
 
     const data = await response.json();
 
+    // aqui garantimos que o frontend sempre recebe só o texto
     if (data?.choices?.[0]?.message?.content) {
       res.json({ reply: data.choices[0].message.content });
     } else {
       res.status(500).json({ error: "Sem resposta da IA", details: data });
     }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
