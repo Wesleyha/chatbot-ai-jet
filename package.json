@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node serve.js"
+    "start": "npm start"
     
   },
   "dependencies": {
