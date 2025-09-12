@@ -6,11 +6,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// rota de teste
+// rota raiz (teste rápido)
 app.get("/", (req, res) => {
   res.send("✅ API do Chatbot está online!");
 });
 
+// rota de chat
 app.post("/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
@@ -22,7 +23,7 @@ app.post("/chat", async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo", // mais garantido
+        model: "gpt-3.5-turbo", // modelo seguro
         messages: [{ role: "user", content: userMessage }]
       })
     });
